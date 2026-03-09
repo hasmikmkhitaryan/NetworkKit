@@ -36,7 +36,7 @@ public final class ETagMiddleware: Middleware {
         switch result {
         case .success((let data, let response)):
             // Store ETag from response
-            if let etag = response.allHeaderFields["ETag"] as? String {
+            if let etag = response.value(forHTTPHeaderField: "ETag") {
                 await cache.store(etag: etag, for: url)
             }
             
