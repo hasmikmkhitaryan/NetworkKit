@@ -7,13 +7,13 @@
 
 import Foundation
 
-public protocol TokenProvider: AnyObject {
+public protocol TokenProvider: AnyObject, Sendable {
     var accessToken: String? { get }
     func refreshToken() async throws -> String
 }
 
 public final class AuthMiddleware: Middleware {
-    private weak var tokenProvider: TokenProvider?
+    private weak let tokenProvider: TokenProvider?
     public init(tokenProvider: TokenProvider?) { self.tokenProvider = tokenProvider }
 
     public func prepare(_ request: URLRequest, requiresAuth: Bool) async throws -> URLRequest {

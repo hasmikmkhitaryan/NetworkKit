@@ -7,7 +7,8 @@
 
 import Foundation
 
-public final class AppTokenProvider: TokenProvider {
+// Marked as @unchecked Sendable because it holds mutable state; callers must ensure safe access across threads.
+public final class AppTokenProvider: TokenProvider, @unchecked Sendable {
     public init() {}
     public private(set) var accessToken: String?
     public func refreshToken() async throws -> String {
@@ -31,3 +32,4 @@ public func makeDefaultClient(baseURL: URL) -> DefaultNetworkClient {
             RetryMiddleware(policy: .limited(3), tokenProvider: tokenProvider)
         ])
 }
+

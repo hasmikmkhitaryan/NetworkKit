@@ -154,7 +154,7 @@ final class MiddlewareTests: XCTestCase {
 }
 
 // MARK: - Mock Token Provider
-class MockTokenProvider: TokenProvider {
+final class MockTokenProvider: TokenProvider, @unchecked Sendable {
     var accessToken: String?
     
     init(accessToken: String?) {
@@ -168,7 +168,7 @@ class MockTokenProvider: TokenProvider {
 }
 
 // MARK: - Mock Logger
-class MockLogger: Logger {
+final class MockLogger: Logger, @unchecked Sendable {
     var requestLogged = false
     var responseLogged = false
     var errorLogged = false

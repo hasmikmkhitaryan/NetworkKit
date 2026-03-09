@@ -8,13 +8,13 @@
 import Foundation
 
 /// Protocol for logging network requests and responses
-public protocol Logger {
+public protocol Logger: Sendable {
     func logRequest(_ request: URLRequest, level: LogLevel)
     func logResponse(_ response: HTTPURLResponse, data: Data?, for request: URLRequest, level: LogLevel)
     func logError(_ error: NetworkError, for request: URLRequest, level: LogLevel)
 }
 
-public enum LogLevel {
+public enum LogLevel: Sendable {
     case debug, info, warning, error
 }
 
@@ -80,7 +80,7 @@ public struct ConsoleLogger: Logger {
 }
 
 /// Protocol for redacting sensitive headers
-public protocol HeaderRedactor {
+public protocol HeaderRedactor: Sendable {
     func redact(_ headers: [String: String]) -> [String: String]
 }
 

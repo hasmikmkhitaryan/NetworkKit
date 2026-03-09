@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol Middleware {
+public protocol Middleware: Sendable {
     func prepare(_ request: URLRequest, requiresAuth: Bool) async throws -> URLRequest
     func didReceive(_ result: Result<(Data, HTTPURLResponse), NetworkError>,
                     for request: URLRequest) async

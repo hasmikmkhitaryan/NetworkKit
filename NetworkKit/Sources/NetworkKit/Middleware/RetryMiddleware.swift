@@ -8,14 +8,18 @@
 import Foundation
 
 public final class RetryMiddleware: Middleware {
-    public enum Policy { case never, limited(Int) }
+    public enum Policy: Sendable {
+        case never
+        case limited(Int)
+    }
+
     private let policy: Policy
-    private let backoff: (Int) -> UInt64 // nanoseconds
-    private weak var tokenProvider: TokenProvider?
+    private let backoff: @Sendable (Int) -> UInt64 // nanoseconds
+    private weak let tokenProvider: TokenProvider?
 
     public init(policy: Policy = .limited(2),
                 tokenProvider: TokenProvider? = nil,
-                backoff: @escaping (Int) -> UInt64 = { attempt in
+                backoff: @escaping @Sendable (Int) -> UInt64 = { attempt in
                     let base = UInt64(200_000_000) << attempt // 0.2s, 0.4s, 0.8s...
                     return base + UInt64.random(in: 0..<100_000_000)
                 }) {
