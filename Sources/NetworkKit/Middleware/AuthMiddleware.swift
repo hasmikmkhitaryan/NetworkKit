@@ -24,5 +24,11 @@ public final class AuthMiddleware: Middleware {
     }
 
     public func didReceive(_ result: Result<(Data, HTTPURLResponse), NetworkError>,
-                           for request: URLRequest) async { /* no-op */ }
+                           for request: URLRequest) async {
+        guard case .failure(let error) = result,
+              case .server(let status, _) = error,
+              status == 401 else { return }
+
+        _ = try? await tokenProvider?.refreshToken()
+    }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct RequestBuilder {
+public struct RequestBuilder: Sendable {
     public let baseURL: URL
     public init(baseURL: URL) { self.baseURL = baseURL }
 

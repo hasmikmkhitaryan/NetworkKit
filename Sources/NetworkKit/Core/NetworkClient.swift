@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol NetworkClient {
+public protocol NetworkClient: Sendable {
     func send<E: Endpoint>(_ endpoint: E) async throws -> E.Response
     func sendRaw(_ request: URLRequest) async throws -> (Data, HTTPURLResponse)
 }

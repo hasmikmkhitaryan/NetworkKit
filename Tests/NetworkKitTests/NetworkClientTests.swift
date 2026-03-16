@@ -119,7 +119,7 @@ final class NetworkClientTests: XCTestCase {
 }
 
 // MARK: - Mock HTTP Client
-class MockHTTPClient: HTTPClient {
+final class MockHTTPClient: HTTPClient, @unchecked Sendable {
     var mockResponse: (Data, URLResponse)?
     var mockError: Error?
     
