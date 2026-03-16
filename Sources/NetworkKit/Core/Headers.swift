@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Headers: ExpressibleByDictionaryLiteral {
+public struct Headers: ExpressibleByDictionaryLiteral, Sendable {
     public private(set) var storage: [String: String] = [:]
     public init(dictionaryLiteral elements: (String, String)...) {
         for (k, v) in elements { storage[k] = v }
